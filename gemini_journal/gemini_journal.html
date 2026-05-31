@@ -158,6 +158,21 @@
     </ul>
     <p><strong>Tech Stack:</strong> Python, FastAPI, NumPy, SciPy, Librosa, HTML5 (Canvas), Vanilla CSS/JS, Git, GitHub API.</p>
 </div>
+<hr>
+<div class="entry" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; font-family: sans-serif;">
+    <h3>2026-05-31: Standalone voxtrainer Repository Setup</h3>
+    <p><strong>Objective:</strong> Separate the voice trainer application from the <code>music_generation</code> workspace into an independent standalone repository named <code>voxtrainer</code> and host it on GitHub.</p>
+    <p><strong>Solution:</strong></p>
+    <ul>
+        <li>Separated the voice trainer application from the music video studio project into the new <code>voxtrainer/</code> directory.</li>
+        <li>Created local environment files (<code>.env</code> containing Sheets variables, <code>.gitignore</code> ignoring temp files/recordings, and a comprehensive <code>README.md</code> explaining application features and setup).</li>
+        <li>Initialized a standalone Git repository in <code>voxtrainer/</code> and committed all components (DSP engine, offline expert agent, FastAPI server, logs, and frontend client assets).</li>
+        <li>Created a new private repository on GitHub named <code>voxtrainer</code> under the account <code>RagaManDaMan</code> using the user's Personal Access Token.</li>
+        <li>Configured the git remote origin and successfully pushed the <code>main</code> branch to GitHub.</li>
+        <li>Stopped the old server process (task-542) and successfully started the FastAPI voice trainer server from the new <code>voxtrainer/</code> directory on port 8003.</li>
+    </ul>
+    <p><strong>Tech Stack:</strong> Git, GitHub API, FastAPI, Python, HTML5, Vanilla CSS/JS.</p>
+</div>
 
 
 
