@@ -1,0 +1,168 @@
+<div class="journal-entry" style="border-left: 4px solid #4a90e2; padding: 15px; margin: 20px 0; font-family: sans-serif; background: #f9f9f9;">
+    <h3 style="margin-top: 0;">Session Summary: April 27, 2026</h3>
+    <p><strong>Objective:</strong> Generate minimalist line art for a music video based on a bilingual English-Tamil song about palm sap and the "good life."</p>
+    <ul>
+        <li><strong>Interaction:</strong> Interpreted lyrics (உள்ளூரிலே உசந்த மரம், etc.) to derive a visual narrative.</li>
+        <li><strong>Output:</strong> Generated a series of 5 minimalist ink-on-parchment sketches:
+            <ol>
+                <li>The Climb (The worker ascending the palm tree).</li>
+                <li>The Pour (Fresh sap flowing into a clay pot).</li>
+                <li>The Singing Duo (Climber and girl singing together in a rustic village setting).</li>
+                <li>The Sunset Journey (Silhouettes walking toward a setting sun).</li>
+                <li>Light in the Heart (Abstract sunlight through palm fronds).</li>
+            </ol>
+        </li>
+        <li><strong>Refinement:</strong> Adjusted the "musician" scene from a formal setting to a more local, raw village scene based on user feedback to ensure the art felt grounded and authentic.</li>
+    </ul>
+    <p style="font-size: 0.9em; color: #666;"><em>Note: The user was introduced to the Gemini Journaling feature during this session.</em></p>
+</div>
+<div class="journal-entry" style="border-left: 4px solid #2ecc71; padding: 15px; margin: 20px 0; font-family: sans-serif; background: #f0fdf4;">
+    <h3 style="margin-top: 0;">Session Summary: April 29, 2026</h3>
+    <p><strong>Objective:</strong> Technical support for finalizing a music video in DaVinci Resolve with custom Tamil subtitles.</p>
+    <ul>
+        <li><strong>Subtitle Management:</strong> Guided the user through importing SRT files and styling them with handwriting fonts to match the minimalist sketch aesthetic.</li>
+        <li><strong>Font Research:</strong> Identified and recommended native macOS handwriting fonts (Chalkboard SE) and professional Tamil handwriting fonts (Kavivanar, Arima Madurai) for an authentic "cursive" look.</li>
+        <li><strong>Export Optimization:</strong> Troubleshooting QuickTime playback issues by configuring "Custom" export settings (MP4, H.264, Native Encoder) and ensuring the "Burn into video" subtitle setting was active.</li>
+        <li><strong>UI Support:</strong> Navigated the transition between the Edit and Deliver pages, and resolved confusion over Dual/Single viewer modes.</li>
+    </ul>
+    <p style="font-size: 0.9em; color: #666;"><em>Status: Video successfully styled and prepared for final render.</em></p>
+</div>
+<div class="session-log">
+    <h3>Session Summary: April 29, 2026</h3>
+    <p><strong>Objective:</strong> Optimize agentic workflow and implement batch cover generation.</p>
+    <ul>
+        <li>Refactored <code>analyze_and_generate.py</code> to support JSON metadata output.</li>
+        <li>Created <code>batch_covers.py</code> orchestrator for autonomous overnight processing.</li>
+        <li>Configured multi-genre cover suite (Jazz, Afro-Cuban, Reggaeton, EDM, Hip-Hop).</li>
+        <li>Established state persistence via <code>batch_manifest.json</code> to ensure resume-on-failure.</li>
+        <li>Verified environment permissions and directory structure for input/output.</li>
+    </ul>
+</div>
+<hr>
+<div class="session-log">
+    <h3>Session Upgrade: Antigravity Studio v1.0</h3>
+    <p><strong>Objective:</strong> Align Gemini generation with ACE-Step 1.5 diffusion service.</p>
+    <ul>
+        <li>Implemented <code>ace_bridge.py</code>: Connects analysis engine to the REST API on port 8001.</li>
+        <li>Built <b>Antigravity Studio UX</b>: High-fidelity web interface for diffusion parameter control.</li>
+        <li>Exposed Master Controls: DiT Steps, CFG Scale, Negative Prompt, and Task Type (Cover/Text2Music).</li>
+        <li>Automated Prompt Engineering: Analysis data (Key/Tempo) is now injected into generative prompts.</li>
+    </ul>
+</div>
+<hr>
+<div class="entry" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+    <h3>2026-04-29: Guardian Switch Implementation</h3>
+    <p><strong>Request:</strong> Design a "Dead Man's Switch" for animal welfare safety.</p>
+    <p><strong>Solution:</strong> Developed a Google Apps Script (Guardian Switch) with the following features:</p>
+    <ul>
+        <li>Daily email check-in reminders sent to the user.</li>
+        <li>Premium Web App interface with a mobile-optimized "I'm Okay" acknowledgment button.</li>
+        <li>Background "Sentinel" process running hourly to detect >24h inactivity.</li>
+        <li>Automated emergency email dispatch to a pre-configured group of friends if check-in is missed.</li>
+    </ul>
+    <p><strong>Tech Stack:</strong> Google Apps Script, HTML/CSS (Vanilla), JavaScript.</p>
+</div>
+<hr>
+<div class="entry" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; font-family: sans-serif;">
+    <h3>2026-05-27: VoxGrip Voice Trainer & Aerodynamic Monitor</h3>
+    <p><strong>Objective:</strong> Build a local voice-training and aerodynamic pressure monitoring tool using the Google Antigravity SDK.</p>
+    <p><strong>Solution:</strong> Developed the VoxGrip application stack:</p>
+    <ul>
+        <li>Created a robust Python DSP analysis engine (<code>vocal_dsp.py</code>) using <code>librosa</code> and <code>scipy</code> to track fundamental frequency (F0), Jitter, Shimmer, LPC formants (F1, F2), and calculate Back-Pressure and Dryness Indexes.</li>
+        <li>Built the Antigravity Agent script (<code>voxgrip_agent.py</code>) that registers the DSP tools, connects with Gemini, and performs pedagogical evaluations for vocal stabilization.</li>
+        <li>Implemented a FastAPI server (<code>voxgrip_app.py</code>) on port 8003 serving the UI, handling audio uploads, running analysis pipelines, and logging session history.</li>
+        <li>Designed a premium dark-themed dashboard (<code>index.html</code>, <code>style.css</code>, <code>app.js</code>) featuring a microphone recorder, canvas visualizers (2D Vowel Migration and stability timeline), gauges, and agent chat interface.</li>
+        <li>Verified the pipeline using a synthetic sliding vocal WAV file.</li>
+        <li>Implemented direct Google Sheets logging integration via Google Apps Script Web App, enabling automated background synchronization of session metrics.</li>
+    </ul>
+    <p><strong>Tech Stack:</strong> FastAPI, google-antigravity, librosa, scipy, HTML5 (Canvas, MediaRecorder), HSL/CSS (Vanilla), JavaScript.</p>
+</div>
+<hr>
+<div class="entry" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; font-family: sans-serif;">
+    <h3>2026-05-27: VoxGrip Vocal Practice Trial (User Phonation)</h3>
+    <p><strong>Exercise:</strong> Trill Sustainer (15 seconds, held pitch/sweeps)</p>
+    <p><strong>Acoustic Metrics:</strong></p>
+    <ul>
+        <li><strong>Pitch (F0):</strong> 126.44 Hz average (~B2/C3), with dynamic leaps up to 360–420 Hz.</li>
+        <li><strong>Jitter:</strong> 8.95% (High mucosal friction warning, indicating vocal fold dry-out).</li>
+        <li><strong>Shimmer:</strong> 8.14% (Subglottic pressure and amplitude fluctuations).</li>
+        <li><strong>Back-Pressure:</strong> 65.89% (Borderline cushion support).</li>
+        <li><strong>Vowel Space:</strong> /ʊ/ (Successfully shaded from closed /u/ to couple formants without pitch breaks).</li>
+        <li><strong>Dryness/Friction Index:</strong> 52.71 / 100</li>
+    </ul>
+    <p><strong>Agent Feedback Summary:</strong> Diagnosed significant onset/registral friction and borderline back-pressure support. Recommended immediate hydration, pre-scale voiced fricatives (/v/) to moisten the mucosa, lip narrowing to increase occlusion back-pressure, and progressive jaw release above 360 Hz to decouple laryngeal squeeze.</p>
+</div>
+<hr>
+<div class="entry" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; font-family: sans-serif;">
+    <h3>2026-05-27: Google Sheets Integration Upgrade (Remedials Logging)</h3>
+    <p><strong>Enhancement:</strong> Added automated logging of the agent's pedagogical recommendations ("Remedials") directly to the Google Spreadsheet.</p>
+    <p><strong>Solution:</strong></p>
+    <ul>
+        <li>Modified the backend payload in <code>voxgrip_app.py</code> to pack the agent's diagnostic evaluation.</li>
+        <li>Updated the web client's copyable Google Apps Script code inside <code>index.html</code> to create the "Remedials / Recommendations" column and append the text.</li>
+    </ul>
+</div>
+<hr>
+<div class="entry" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; font-family: sans-serif;">
+    <h3>2026-05-27: Terminal Log Cleanup (Warning Suppression)</h3>
+    <p><strong>Refinement:</strong> Silenced redundant <code>librosa</code> warnings in the Python environment.</p>
+    <p><strong>Solution:</strong> Configured <code>warnings.filterwarnings</code> filters inside <code>vocal_dsp.py</code> to ignore <code>UserWarning</code> and <code>FutureWarning</code>, keeping the terminal output clean while running vocal analysis sessions.</p>
+</div>
+<hr>
+<div class="entry" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; font-family: sans-serif;">
+    <h3>2026-05-28: Vocal Physiology & Exercise Education</h3>
+    <p><strong>Objective:</strong> Address user concerns regarding light-headedness during SOVT exercises and explain the "Free Scaling & Phonation Stability" exercise mode.</p>
+    <p><strong>Key Discussion Points:</strong></p>
+    <ul>
+        <li><strong>Physiology of Light-headedness:</strong> Explained that woodwind players (flute/sax) are accustomed to high air volumes/pressures regulated by the embouchure and instrument resistance, whereas vocal exercises (SOVTEs) require much lower airflow. Over-blowing during lip trills/voiced fricatives leads to CO2 washout (hyperventilation), causing temporary light-headedness.</li>
+        <li><strong>Free Scaling & Phonation Stability:</strong> Clarified that this mode measures pitch tracking (F0 continuity), vocal perturbation (jitter/shimmer), back-pressure, and the dryness/friction index across arbitrary singing scales, glissandi, or free-form phrases.</li>
+    </ul>
+</div>
+<hr>
+<div class="entry" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; font-family: sans-serif;">
+    <h3>2026-05-28: Troubleshooting High Jitter and Shimmer</h3>
+    <p><strong>Objective:</strong> Help the user understand why jitter and shimmer scores are rising despite hydration and steaming, and provide mechanical remedies.</p>
+    <p><strong>Key Discussion Points:</strong></p>
+    <ul>
+        <li><strong>Hydration vs. Aerodynamic Stress:</strong> Indicated that steaming and water intake resolve surface and tissue dryness, but cannot fix mechanical/aerodynamic stress. High jitter/shimmer is caused by excessive subglottic pressure and vocal fold collision force (pressed phonation).</li>
+        <li><strong>Woodwind Habits:</strong> Highlighted that woodwind muscle memory causes excessive airflow and larynx constriction.</li>
+        <li><strong>Technical Remedies:</strong> Recommended yawn-sighs to release throat squeeze, gentle vocal fry to re-establish relaxed closure, and straw phonation to maximize laryngeal unloading.</li>
+    </ul>
+</div>
+<hr>
+<div class="entry" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; font-family: sans-serif;">
+    <h3>2026-05-30: VoxGrip Offline calculations & Vowel Migration Selection</h3>
+    <p><strong>Objective:</strong> Migrate VoxGrip calculations to run 100% offline without the Google Gemini API, and integrate the dropdown exercise selection parameter from the frontend to the backend.</p>
+    <p><strong>Solution:</strong></p>
+    <ul>
+        <li>Updated <code>app.js</code> to read the selected exercise mode from the HTML dropdown (lip trill, vowel migration, voiced fricative, free singing) and send it as part of the FormData.</li>
+        <li>Modified <code>voxgrip_app.py</code> status endpoint to always report key status configured, made <code>api_key</code> parameter optional, and routed the exercise type to the agent script.</li>
+        <li>Re-engineered <code>voxgrip_agent.py</code> into a local, offline rule-based expert analysis engine. It runs the DSP calculations locally and generates customized pedagogical diagnostics and mechanical adjustments (such as acoustic squeeze detection, vowel shading recommendations, back-pressure evaluation, and anti-woodwind support habits) based on the active exercise selection.</li>
+        <li>Added a **"Include Pedagogical Feedback"** checkbox toggle in <code>index.html</code> (styled within the glassmorphism theme via <code>style.css</code>) and updated <code>app.js</code> and <code>voxgrip_app.py</code> to conditionally bypass the rule-based expert engine if the user only wants to read raw metrics.</li>
+        <li>Verified startup, execution, and local report output against synthetic vocal WAV samples, leaving the FastAPI backend running on port 8003.</li>
+    </ul>
+    <p><strong>Tech Stack:</strong> Python, FastAPI, NumPy, SciPy, Librosa, HTML5, Vanilla CSS/JS.</p>
+</div>
+<hr>
+<div class="entry" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; font-family: sans-serif;">
+    <h3>2026-05-31: VoxGrip Advanced Upgrades & Instrumental Spillover Profile</h3>
+    <p><strong>Objective:</strong> Upgrade VoxGrip offline capabilities with advanced vocal diagnostics, new exercise modes, instrumental habits profile checklist, and longitudinal trend visualizations.</p>
+    <p><strong>Solution:</strong></p>
+    <ul>
+        <li>Implemented time-series **Vibrato Analysis** (Rate in Hz, Depth in semitones) in <code>vocal_dsp.py</code> using zero-crossing detrended pitch estimation.</li>
+        <li>Added **Vocal Fry Onset** and **Messa di Voce** exercises to the dropdown selector in <code>index.html</code>, and coded specialized local evaluation rules for them in <code>voxgrip_agent.py</code>.</li>
+        <li>Created a GET/POST <code>/api/profile</code> endpoint in the backend and a checkboxes checklist under settings in the frontend to save the user's active instruments (flute/sax, violin, guitar). Coded customized analogies in the expert pedagogue engine: woodwind flow pressure checks, violin bow-stroke analogies, and guitar postural corrections.</li>
+        <li>Built an interactive **Longitudinal Practice Trend Chart** using HTML5 Canvas inside the Practice History tab. Plots smooth Bezier line curves representing Dryness Index, Vocal Perturbations (Jitter/Shimmer), or Back-Pressure over history sessions.</li>
+        <li>Initialized a local **Git Repository** in the project root, added a custom <code>.gitignore</code> to ignore build files, local keys, and audio recordings, created a comprehensive <code>README.md</code>, and successfully checked in the codebase with an initial commit.</li>
+        <li>Created a new private repository on GitHub named <code>music_generation</code> under the user's account <code>RagaManDaMan</code> using their existing Personal Access Token, configured remote origins, and successfully pushed the codebase to the remote <code>main</code> branch.</li>
+    </ul>
+    <p><strong>Tech Stack:</strong> Python, FastAPI, NumPy, SciPy, Librosa, HTML5 (Canvas), Vanilla CSS/JS, Git, GitHub API.</p>
+</div>
+
+
+
+
+
+
+
+

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoxGrip | Voice Trainer & Aerodynamic Monitor</title>
+    <!-- Google Fonts: Outfit & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background glow spheres -->
+    <div class="glow-sphere sphere-cyan"></div>
+    <div class="glow-sphere sphere-purple"></div>
+
+    <div class="app-container">
+        <!-- Top Navigation Header -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-wind logo-waves"></i>
+                    <i class="fa-solid fa-microphone logo-mic"></i>
+                </div>
+                <h1>VOX<span>GRIP</span></h1>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" id="tab-trainer" onclick="switchTab('trainer')">
+                    <i class="fa-solid fa-sliders"></i> Vocal Trainer
+                </button>
+                <button class="tab-btn" id="tab-history" onclick="switchTab('history')">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Practice History
+                </button>
+                <button class="tab-btn" id="tab-settings" onclick="switchTab('settings')">
+                    <i class="fa-solid fa-file-excel"></i> Sheets Log
+                </button>
+            </div>
+
+            <div class="system-status">
+                <div class="status-item" id="api-status">
+                    <span class="status-indicator warning"></span>
+                    <span class="status-text">Checking API...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Dynamic Alert for API key -->
+            <div id="api-key-warning" class="alert-banner hidden">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="alert-text">
+                    <strong>Gemini API Key Missing:</strong> The Antigravity Agent requires a Gemini API Key to function. Please create a <code>.env</code> file containing <code>GEMINI_API_KEY=your_key_here</code> in the project directory and restart the server.
+                </div>
+            </div>
+
+            <!-- Trainer Tab Content -->
+            <section id="trainer-section" class="tab-section active">
+                <div class="grid-layout">
+                    
+                    <!-- Left: Control & Metrics Column -->
+                    <div class="control-panel">
+                        <!-- Recording Controller Card -->
+                        <div class="glass-card controller-card">
+                            <h2>Interactive Controller</h2>
+                            <p class="description">Select your exercise and record a vocal scale or hold a pitch.</p>
+                            
+                            <div class="exercise-selector">
+                                <label for="exercise-type">Exercise Mode</label>
+                                <select id="exercise-type">
+                                    <option value="lip_trill">The Trill Sustainer (Lip / Tongue Roll)</option>
+                                    <option value="vowel_migration">Vowel Migration (High-Register /i/ or /u/)</option>
+                                    <option value="voiced_fricative">Voiced Fricative (/v/ or /z/ Support)</option>
+                                    <option value="vocal_fry">Vocal Fry Onset (Gentle Cord Realignment)</option>
+                                    <option value="messa_di_voce">Messa di Voce (Crescendo & Support Test)</option>
+                                    <option value="free_singing">Free Scaling & Phonation Stability</option>
+                                </select>
+                            </div>
+
+                            <div class="feedback-toggle">
+                                <input type="checkbox" id="enable-feedback" checked>
+                                <label for="enable-feedback">Include Pedagogical Feedback</label>
+                            </div>
+
+                            <div class="recording-controls">
+                                <button id="record-btn" class="record-btn idle" onclick="toggleRecording()">
+                                    <i class="fa-solid fa-microphone"></i>
+                                </button>
+                                <div class="timer-display">
+                                    <span id="timer-count">00:00</span>
+                                    <span id="recording-status">Idle</span>
+                                </div>
+                            </div>
+
+                            <div class="audio-wave-container">
+                                <canvas id="waveform-canvas"></canvas>
+                            </div>
+
+                            <!-- Upload alternative -->
+                            <div class="upload-alternative">
+                                <span class="or-separator">or upload audio file</span>
+                                <input type="file" id="file-upload" accept="audio/wav,audio/mp3,audio/webm" onchange="handleFileUpload(event)">
+                                <label for="file-upload" class="upload-label">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i> Choose WAV or WebM File
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Gauge Panels Grid -->
+                        <div class="metrics-grid">
+                            <!-- Back Pressure -->
+                            <div class="glass-card metric-card" id="card-backpressure">
+                                <div class="metric-header">
+                                    <h3>Acoustic Back-Pressure</h3>
+                                    <i class="fa-solid fa-gauge-high"></i>
+                                </div>
+                                <div class="metric-value">
+                                    <span id="val-backpressure">--</span><span class="unit">/100</span>
+                                </div>
+                                <div class="meter-bar">
+                                    <div id="bar-backpressure" class="meter-fill" style="width: 0%"></div>
+                                </div>
+                                <p class="metric-hint" id="hint-backpressure">Record to measure vocal tract cushion</p>
+                            </div>
+
+                            <!-- Mucosal Friction (Jitter) -->
+                            <div class="glass-card metric-card" id="card-jitter">
+                                <div class="metric-header">
+                                    <h3>Mucosal Friction (Jitter)</h3>
+                                    <i class="fa-solid fa-water-ladder"></i>
+                                </div>
+                                <div class="metric-value">
+                                    <span id="val-jitter">--</span><span class="unit">%</span>
+                                </div>
+                                <div class="meter-bar">
+                                    <div id="bar-jitter" class="meter-fill" style="width: 0%"></div>
+                                </div>
+                                <p class="metric-hint" id="hint-jitter">Target: Under 1.0% (hydration / glide)</p>
+                            </div>
+
+                            <!-- Amplitude Perturbation (Shimmer) -->
+                            <div class="glass-card metric-card" id="card-shimmer">
+                                <div class="metric-header">
+                                    <h3>Vocal Shimmer</h3>
+                                    <i class="fa-solid fa-waveform"></i>
+                                </div>
+                                <div class="metric-value">
+                                    <span id="val-shimmer">--</span><span class="unit">%</span>
+                                </div>
+                                <div class="meter-bar">
+                                    <div id="bar-shimmer" class="meter-fill" style="width: 0%"></div>
+                                </div>
+                                <p class="metric-hint" id="hint-shimmer">Target: Under 3.0% (airflow stability)</p>
+                            </div>
+
+                            <!-- Dryness Index -->
+                            <div class="glass-card metric-card" id="card-dryness">
+                                <div class="metric-header">
+                                    <h3>Dryness & Friction Index</h3>
+                                    <i class="fa-solid fa-temperature-half"></i>
+                                </div>
+                                <div class="metric-value">
+                                    <span id="val-dryness">--</span><span class="unit">/100</span>
+                                </div>
+                                <div class="meter-bar">
+                                    <div id="bar-dryness" class="meter-fill" style="width: 0%"></div>
+                                </div>
+                                <p class="metric-hint" id="hint-dryness">Fatigue score of the session</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Middle: Visualizers Column -->
+                    <div class="visualizer-panel">
+                        <!-- Canvas 1: Vowel Migration Visualizer -->
+                        <div class="glass-card visualizer-card">
+                            <div class="visualizer-header">
+                                <h2>Vowel Migration Visualizer (Formant Space)</h2>
+                                <p class="subtitle">Real-time acoustic mapping of Formants (F1 vs F2)</p>
+                            </div>
+                            <div class="canvas-wrapper">
+                                <canvas id="vowel-canvas"></canvas>
+                                <div class="vowel-labels">
+                                    <span class="vowel-lbl i-vowel">/i/ (Closed)</span>
+                                    <span class="vowel-lbl a-vowel">/ɑ/ (Open)</span>
+                                    <span class="vowel-lbl u-vowel">/u/ (Back)</span>
+                                    <span class="vowel-lbl shaded-vowel">Neutral Shading Target (Center)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Canvas 2: Stability Timeline -->
+                        <div class="glass-card visualizer-card">
+                            <div class="visualizer-header">
+                                <h2>Trill Sustainer & Pitch stability</h2>
+                                <p class="subtitle">Acoustic continuity of pitch (F0) & support cushion over time</p>
+                            </div>
+                            <div class="canvas-wrapper">
+                                <canvas id="stability-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Agent & Analysis Console Column -->
+                    <div class="agent-panel">
+                        <div class="glass-card agent-card">
+                            <div class="agent-header">
+                                <div class="agent-avatar">
+                                    <i class="fa-solid fa-brain-circuit"></i>
+                                </div>
+                                <div class="agent-title">
+                                    <h2>Antigravity Agent</h2>
+                                    <span class="badge">Aero-Vocal Pedagogue</span>
+                                </div>
+                            </div>
+
+                            <div class="agent-console" id="agent-chat-history">
+                                <div class="chat-bubble agent">
+                                    <div class="bubble-content">
+                                        <p>Hello! I am the VoxGrip Antigravity Agent. I analyze the deep acoustics of your practice scales.</p>
+                                        <p>Select an exercise, click the **Microphone** to record 3 to 10 seconds of phonation (like a lip roll or sliding vowels), and I will calculate your Phonation Stability metrics and provide real-time mechanical adjustments!</p>
+                                    </div>
+                                    <span class="bubble-time">System Ready</span>
+                                </div>
+                            </div>
+
+                            <div class="analysis-loading hidden" id="analysis-spinner">
+                                <div class="spinner"></div>
+                                <p>Antigravity Agent running local DSP & Gemini loops...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- History Tab Content -->
+            <section id="history-section" class="tab-section">
+                <!-- Longitudinal Progress Trend Card -->
+                <div class="glass-card trend-chart-card">
+                    <div class="trend-header">
+                        <div class="trend-title-container">
+                            <h2>Longitudinal Practice Trends</h2>
+                            <p class="subtitle">Acoustic continuity, fatigue, and cushion progress over time</p>
+                        </div>
+                        <div class="trend-tabs">
+                            <button class="trend-tab-btn active" id="trend-tab-dryness" onclick="switchTrendMetric('dryness')">Dryness Index</button>
+                            <button class="trend-tab-btn" id="trend-tab-perturbations" onclick="switchTrendMetric('perturbations')">Jitter & Shimmer</button>
+                            <button class="trend-tab-btn" id="trend-tab-backpressure" onclick="switchTrendMetric('backpressure')">Back-Pressure</button>
+                        </div>
+                    </div>
+                    <div class="trend-canvas-wrapper">
+                        <canvas id="trend-canvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="history-container">
+                    <div class="glass-card history-list-card">
+                        <h2>Vocal Session History</h2>
+                        <p class="description">Review your longitudinal progress, aerodynamic index stability, and fatigue curves.</p>
+                        <div class="history-list" id="history-list-container">
+                            <div class="loading-history">
+                                <div class="spinner-small"></div>
+                                <span>Retrieving session logs...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card history-detail-card" id="history-detail-panel">
+                        <div class="detail-placeholder">
+                            <i class="fa-solid fa-chart-line-up"></i>
+                            <p>Select a session from the list on the left to view detailed metrics and agent recommendations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Tab Content -->
+            <section id="settings-section" class="tab-section">
+                <div class="settings-grid">
+                    <!-- Google Sheets Setup Card -->
+                    <div class="glass-card settings-card">
+                        <h2>Google Sheets Logging Setup</h2>
+                        <p class="description">Automatically append every vocal session to a Google Spreadsheet using Google Apps Script.</p>
+                        
+                        <div class="settings-form">
+                            <div class="form-group">
+                                <label for="sheets-url-input">Google Apps Script Web App URL</label>
+                                <input type="url" id="sheets-url-input" placeholder="https://script.google.com/macros/s/.../exec">
+                            </div>
+                            <div class="form-group">
+                                <label for="sheets-token-input">Secret Authorization Token</label>
+                                <input type="text" id="sheets-token-input" value="voxgrip_secret_12345">
+                            </div>
+                            <button id="save-settings-btn" class="save-btn" onclick="saveSettings()">
+                                <i class="fa-solid fa-floppy-disk"></i> Save Settings
+                            </button>
+                            <span id="settings-save-status" class="save-status"></span>
+                        </div>
+                    </div>
+
+                    <!-- Instrumental Spillover Profile Card -->
+                    <div class="glass-card settings-card">
+                        <h2>Instrumental Spillover Profile</h2>
+                        <p class="description">Select your musical background. The expert analysis will customize behavioral hooks and analogies accordingly.</p>
+                        
+                        <div class="settings-form">
+                            <div class="instrument-checklist">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="inst-woodwinds" value="woodwinds">
+                                    <label for="inst-woodwinds">
+                                        <strong>Woodwinds (Flute / Saxophone)</strong>
+                                        <span>Flow support, air-volume adjustments, jaw/lip tension release</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="inst-violin" value="violin">
+                                    <label for="inst-violin">
+                                        <strong>Violin (Bowed Strings)</strong>
+                                        <span>Breath support draw comparison with bowing velocity/friction</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="inst-guitar" value="guitar">
+                                    <label for="inst-guitar">
+                                        <strong>Guitar (Plucked / Fretted)</strong>
+                                        <span>Cervical spine posture release, onset attack plucking control</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <button id="save-profile-btn" class="save-btn" onclick="saveProfile()">
+                                <i class="fa-solid fa-user-gear"></i> Save Profile
+                            </button>
+                            <span id="profile-save-status" class="save-status"></span>
+                        </div>
+                    </div>
+
+                    <!-- Setup Guide Card -->
+                    <div class="glass-card guide-card">
+                        <h2>Apps Script Guide</h2>
+                        <ol class="setup-list">
+                            <li>Create a new <strong>Google Sheet</strong>.</li>
+                            <li>Go to <strong>Extensions &gt; Apps Script</strong>.</li>
+                            <li>Paste the code block below into the script editor.</li>
+                            <li>Click <strong>Deploy &gt; New Deployment</strong>.</li>
+                            <li>Set "Execute as" to <strong>Me</strong> and "Who has access" to <strong>Anyone</strong>.</li>
+                            <li>Deploy, authorize permissions, copy the <strong>Web App URL</strong>, and paste it here!</li>
+                        </ol>
+                        
+                        <div class="code-box-container">
+                            <div class="code-box-header">
+                                <span>Code.gs</span>
+                                <button class="copy-code-btn" onclick="copyCode()"><i class="fa-solid fa-copy"></i> Copy</button>
+                            </div>
+                            <pre class="code-box"><code id="apps-script-code">function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  
+  // Verify secret token
+  var secretToken = "voxgrip_secret_12345";
+  if (data.token !== secretToken) {
+    return ContentService.createTextOutput(JSON.stringify({status: "error", message: "Unauthorized"})).setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  // Add headers if sheet is empty
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow([
+      "Timestamp", "Session ID", "Total Dur (s)", "Voiced Dur (s)", 
+      "F0 Pitch (Hz)", "Jitter (%)", "Shimmer (%)", 
+      "F1 Formant (Hz)", "F2 Formant (Hz)", "Vowel Space", 
+      "Back-Pressure Index", "Dryness/Friction Index", "Remedials / Recommendations"
+    ]);
+  }
+  
+  // Append data row
+  sheet.appendRow([
+    data.timestamp,
+    data.session_id,
+    data.total_duration_sec,
+    data.voiced_duration_sec,
+    data.f0_hz,
+    data.jitter_percentage,
+    data.shimmer_percentage,
+    data.f1_formant_hz,
+    data.f2_formant_hz,
+    data.vowel_space,
+    data.back_pressure_index,
+    data.dryness_friction_index,
+    data.remedials
+  ]);
+  
+  return ContentService.createTextOutput(JSON.stringify({status: "success"})).setMimeType(ContentService.MimeType.JSON);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="app-footer">
+            <p>VoxGrip &copy; 2026 | Powered by Google Antigravity SDK & Gemini AI</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
