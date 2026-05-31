@@ -25,6 +25,42 @@ const warningBanner = document.getElementById("api-key-warning");
 const chatHistory = document.getElementById("agent-chat-history");
 const analysisSpinner = document.getElementById("analysis-spinner");
 
+// Exercise Instructions Mapping
+const EXERCISE_INSTRUCTIONS = {
+    lip_trill: {
+        title: "The Trill Sustainer",
+        desc: "Close lips loosely and blow air through them to make a motorboat sound, or roll your tongue ('r'). Keep pitch stable or slide up and down."
+    },
+    vowel_migration: {
+        title: "Vowel Migration",
+        desc: "Start singing on /i/ or /u/ in your high register. As you climb higher, gradually widen your throat and shade the vowel towards /ɪ/ ('bit') or /ʊ/ ('book') to release jaw tension."
+    },
+    voiced_fricative: {
+        title: "Voiced Fricative Support",
+        desc: "Produce a sustained 'v-v-v' or 'z-z-z' sound. Maintain a steady teeth-to-lip or teeth-to-tongue constriction to build abdominal back-pressure."
+    },
+    vocal_fry: {
+        title: "Vocal Fry Onset",
+        desc: "Relax your throat and make a lazy, low-pitched creaking sound. Let the bubbles of air float up without force to massage and realign the vocal fold margins."
+    },
+    messa_di_voce: {
+        title: "Messa di Voce",
+        desc: "Sing a single held note. Start extremely quiet (pianissimo), swell to your maximum comfortable volume (forte), and fade back to silence (pianissimo) without breaking pitch."
+    },
+    free_singing: {
+        title: "Free Phonation Stability",
+        desc: "Sing any custom scales, arpeggios, glissandi, or free musical phrases. The engine will evaluate your overall vocal stability, jitter, and shimmer indexes."
+    }
+};
+
+function updateExerciseTooltip() {
+    const selected = document.getElementById("exercise-type").value;
+    const info = EXERCISE_INSTRUCTIONS[selected] || EXERCISE_INSTRUCTIONS.free_singing;
+    
+    document.getElementById("tooltip-title").textContent = info.title;
+    document.getElementById("tooltip-desc").textContent = info.desc;
+}
+
 // Initialize on page load
 window.addEventListener("DOMContentLoaded", () => {
     checkAPIStatus();
@@ -32,6 +68,7 @@ window.addEventListener("DOMContentLoaded", () => {
     loadHistory();
     loadSettings();
     loadProfile();
+    updateExerciseTooltip();
 });
 
 // Check backend status & key

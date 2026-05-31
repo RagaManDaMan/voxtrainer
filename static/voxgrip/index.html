@@ -69,7 +69,7 @@
                             
                             <div class="exercise-selector">
                                 <label for="exercise-type">Exercise Mode</label>
-                                <select id="exercise-type">
+                                <select id="exercise-type" onchange="updateExerciseTooltip()">
                                     <option value="lip_trill">The Trill Sustainer (Lip / Tongue Roll)</option>
                                     <option value="vowel_migration">Vowel Migration (High-Register /i/ or /u/)</option>
                                     <option value="voiced_fricative">Voiced Fricative (/v/ or /z/ Support)</option>
@@ -77,6 +77,13 @@
                                     <option value="messa_di_voce">Messa di Voce (Crescendo & Support Test)</option>
                                     <option value="free_singing">Free Scaling & Phonation Stability</option>
                                 </select>
+                                <div class="exercise-tooltip-container">
+                                    <span class="exercise-tooltip-trigger"><i class="fa-solid fa-circle-question"></i> How to do this test?</span>
+                                    <div class="exercise-tooltip-popup" id="exercise-tooltip-popup">
+                                        <h4 id="tooltip-title">The Trill Sustainer</h4>
+                                        <p id="tooltip-desc">Close lips loosely and blow air through them to make a motorboat sound, or roll your tongue ('r'). Keep pitch stable or slide up and down.</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="feedback-toggle">
